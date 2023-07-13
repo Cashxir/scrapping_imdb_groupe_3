@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=”utf-8″>
+    <title>Algorithme Python</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>Algorithme Python</h1>
+
+    <form id="movieForm">
+        <label for="genre">Quel genre de film avez-vous envie de regarder ?</label>
+        <input type="text" id="genre" name="genre">
+
+        <label for="decade">Préférez-vous les films d'une époque en particulier ?</label>
+        <input type="text" id="decade" name="decade">
+
+        <label for="duration">Combien de temps auriez-vous à accorder au film ?</label>
+        <input type="text" id="duration" name="duration">
+
+        <label for="actor">Quel acteur affectionnez-vous ?</label>
+        <input type="text" id="actor" name="actor">
+
+        <input type="submit" value="Recommander">
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('movieForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var genre = document.getElementById('genre').value;
+            var decade = document.getElementById('decade').value;
+            var duration = document.getElementById('duration').value;
+            var actor = document.getElementById('actor').value;
+
+            var movieData = {
+                genre: genre,
+                decade: decade,
+                duration: duration,
+                actor: actor
+            };
+
+            axios.post('/recommend', movieData)
+                .then(function(response) {
+                    document.getElementById('result').innerHTML = 'Je vous recommande de regarder : ' + response.data;
+                })
+                .catch(function(error) {
+                    console.error(error);
+                });
+        });
+    </script>
+</body>
+</html>
